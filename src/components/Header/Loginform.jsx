@@ -24,7 +24,7 @@ export default function Loginform() {
   return (
     <>
       <form
-        className="p-4 w-full justify-self-center text-center"
+        className="p-4 w-full justify-self-center text-center text-3xl md:text-base"
         onSubmit={handleSubmit}
       >
         {/*Form de login normal*/}

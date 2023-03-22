@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import Errorhandler from "./Errorhandler";
+import { auth } from "../../Firebase/Firebaseinit";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { useDataContext } from "../../context/ContextUno";
 
-export default function Registerform() {
+export default function Registerform({ cerrar }) {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [confirmaremail, setConfirmaremail] = useState("");
@@ -9,6 +15,7 @@ export default function Registerform() {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
   const [error, setError] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
+  const { estalogedin, setEstalogedin, setEsNuevo } = useDataContext();
 
   const manejarNombre = (event) => {
     setNombre(event.target.value);
@@ -28,6 +35,15 @@ export default function Registerform() {
       return setErrorEmail(true);
     }
     if (pass.match(regex)) {
+      cerrar();
+      setEstalogedin(true);
+
+      createUserWithEmailAndPassword(auth, email, pass).then(
+        setTimeout(() => {
+          setEsNuevo(true);
+          // Código que se ejecuta después de esperar 3 segundos
+        }, 3000)
+      );
       console.log(`Email: ${email}, Password: ${pass}`);
     } else {
       setError(true);

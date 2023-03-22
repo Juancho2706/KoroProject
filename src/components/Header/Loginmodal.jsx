@@ -27,7 +27,7 @@ export default function Loginmodal() {
             >
               X
             </button>
-            <Login />
+            <Login cerrar={cerrarModal} />
           </div>
         </>
       ) : (
